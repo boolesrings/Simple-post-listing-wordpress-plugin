@@ -36,7 +36,8 @@ function posts_loop( $atts ) {
 
 	/*
 	 * query the database for the posts with EventDate in the future
-	 * query syntax: http://codex.wordpress.org/Class_Reference/WP_Query#Parameters
+	 * query syntax:
+	 * http://codex.wordpress.org/Class_Reference/WP_Query#Parameters
 	*/
 	$query = "";
 	if ( $category_name ) {
