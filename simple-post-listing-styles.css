@@ -1,0 +1,7 @@
+ul.post-listing div.sharing {
+	display: none;
+}
+ul.post-listing.post-list-post {
+	list-style-type: none;
+	margin-left: 0;
+}

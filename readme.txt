@@ -1,4 +1,4 @@
-=== Simple post list ===
+=== Simple post listing ===
 
 Contributors: sgcoskey
 Donate link: http://boolesrings.org
