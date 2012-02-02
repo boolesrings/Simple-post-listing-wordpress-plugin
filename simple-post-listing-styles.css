@@ -3,5 +3,5 @@ ul.post-listing div.sharing {
 }
 ul.post-listing.post-list-post {
 	list-style-type: none;
-	margin-left: 0;
+	padding-left: 0;
 }
