@@ -7,17 +7,18 @@ Requires at least: 3.0
 Tested up to: 3.3
 Stable tag: 0.0
 
-Use the [posts] shortcode to show a list of posts.
+Use the [postlist] shortcode to show a list of posts.
 
 == Description ==
 
 This is another simple plugin to show a list of posts from your blog.
-Use the `[posts]` shortcode on any post or page.
+Use the `[postlist]` shortcode on any post or page.
 
 The shortcode supports several options:
 
-* **category_name**: If defined, show posts only from this category.
-You can provide multiple comma-separated category names.
+* **category_name**: If defined, show posts only from these
+categories.  You can provide multiple comma-separated category
+identifiers (slugs).
 
 * **style**: One of *list* (default) or *post*.  If it
 is *list*, then the list style is indented and bulleted.  If it is *post* 
@@ -34,6 +35,12 @@ Defaults to `(none)`.
 * **class_name**: If defined, adds this class name to the generated `<ul>` tag.
 Useful for custom styling.
 
+* **q**: Arbitrary &-separated arguments to add to the query.  See the
+[WP_Query](http://codex.wordpress.org/Class_Reference/WP_Query/#Parameters)
+page for available syntax.  For example, to show only posts with tag
+"workshop", and only 3 such posts, you would write `[postlist
+q="posts_per_page=3&tag=workshop"]`.
+
 The output can then be further formatted using CSS.  We recommend the
 plugin [Improved Simpler
 CSS](http://wordpress.org/extend/plugins/imporved-simpler-css/) for
@@ -48,4 +55,4 @@ Nothing unusual here!
 
 == Changelog ==
 
-0.0 initial release
+`0.0` initial release

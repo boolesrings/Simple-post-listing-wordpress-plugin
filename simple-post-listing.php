@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: Simple post listing
- * Description: List a subset of your posts using the shortcode [posts].
+ * Description: List a subset of your posts using the shortcode [postlist].
  * Version: 0.0
  * Author: Samuel Coskey
  * Author URI: http://boolesrings.org
@@ -10,9 +10,9 @@
 /*
  * The shortcode which shows a list of future events.
  * Usage example:
- * [posts category_name="talks" text="excerpt"]
+ * [postlist category_name="talks" text="excerpt"]
 */
-add_shortcode( 'posts', 'posts_loop' );
+add_shortcode( 'postlist', 'posts_loop' );
 
 function posts_loop( $atts ) {
 	global $more;
@@ -25,13 +25,20 @@ function posts_loop( $atts ) {
 		'text' => 'none',
 		'null_text' => '(none)',
 		'class_name' => '',
+		'q' => '',
 	), $atts ) );
 
+	/*
+	 * sanitize the input a little bit
+	*/
 	if ( $style != "list" && $style != "post" ) {
 		$style = "list";
 	}
 	if ( $text != "none" && $text != "excerpt" && $text != "normal" ) {
 		$text = "none";
+	}
+	if ( $q ) {
+		$q = str_replace ( "&#038;", "&", $q );
 	}
 
 	/*
@@ -43,7 +50,10 @@ function posts_loop( $atts ) {
 	if ( $category_name ) {
 		$query .= "category_name=" . $category_name . '&';
 	}
-	$query .= 'ignore_sticky_posts=1&nopaging=true';
+	$query .= 'ignore_sticky_posts=1&posts_per_page=-1';
+	if ( $q ) {
+		$query .= "&" . $q;
+	}
 	$query_results = new WP_Query($query);
 
 	if ( $query_results->post_count ==0 ) {
