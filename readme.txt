@@ -44,7 +44,7 @@ q="posts_per_page=3&tag=workshop"]`.
 The output can then be further formatted using CSS.  We recommend the
 plugin [Improved Simpler
 CSS](http://wordpress.org/extend/plugins/imporved-simpler-css/) for
-quickly styling your upcoming events list (and your site)!
+quickly styling your post list (and your site)!
 
 Report bugs, give feedback, or fork this plugin on
 [GitHub](http://github.com/scoskey/Simple-post-listing-wordpress-plugin).
