@@ -87,10 +87,10 @@ function posts_loop( $atts ) {
 			$ret_val .= "<h2 class='post-listing-entry-title'>";
 		}
 		if ( $show_date ) {
-			$ret_val .= "<span class='upcoming_date'>";
+			$ret_val .= "<span class='post-listing-date'>";
 			$ret_val .= get_the_date($date_format);
 			$ret_val .= "</span>";
-			$ret_val .= "<span class='upcoming_date_sep'>: </span>\n";
+			$ret_val .= "<span class='post-listing-date-sep'>: </span>\n";
 		}
 		$ret_val .= "<a href='" . get_permalink() . "'>";
 		$ret_val .= the_title( '', '', false);
