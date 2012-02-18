@@ -1,3 +1,6 @@
+ul.post-listing .upcoming_date {
+    font-weight: bold;
+}
 ul.post-listing div.sharing {
 	display: none;
 }

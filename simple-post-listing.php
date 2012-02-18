@@ -2,7 +2,7 @@
 /*
  * Plugin Name: Simple post listing
  * Description: List a subset of your posts using the shortcode [postlist].
- * Version: 0.0
+ * Version: 0.1
  * Author: Samuel Coskey
  * Author URI: http://boolesrings.org
 */
@@ -10,7 +10,7 @@
 /*
  * The shortcode which shows a list of future events.
  * Usage example:
- * [postlist category_name="talks" text="excerpt"]
+ * [postlist category="talks" text="excerpt"]
 */
 add_shortcode( 'postlist', 'posts_loop' );
 
@@ -20,17 +20,24 @@ function posts_loop( $atts ) {
 
 	// Arguments to the shortcode
 	extract( shortcode_atts(  array(
+		'category' => '',
         	'category_name' => '',
+		'tag' => '',
 		'style' => 'list',
 		'text' => 'none',
 		'null_text' => '(none)',
 		'class_name' => '',
+		'show_date' => '',
+		'date_format' => get_option('date_format'), // I recommend 'F j, Y'
 		'q' => '',
 	), $atts ) );
 
 	/*
 	 * sanitize the input a little bit
 	*/
+	if ( $category_name && !$category ) {
+		$category = $category_name; // support old name for option
+	}
 	if ( $style != "list" && $style != "post" ) {
 		$style = "list";
 	}
@@ -47,16 +54,19 @@ function posts_loop( $atts ) {
 	 * http://codex.wordpress.org/Class_Reference/WP_Query#Parameters
 	*/
 	$query = "";
-	if ( $category_name ) {
-		$query .= "category_name=" . $category_name . '&';
-	}
 	$query .= 'ignore_sticky_posts=1&posts_per_page=-1';
+	if ( $category ) {
+		$query .= '&' . "category_name=" . $category;
+	}
+	if ( $tag ) {
+		$query .= '&' . "tag=" . $tag;
+	}
 	if ( $q ) {
 		$query .= "&" . $q;
 	}
 	$query_results = new WP_Query($query);
 
-	if ( $query_results->post_count ==0 ) {
+	if ( $query_results->post_count == 0 ) {
 		return "<p>" . wp_kses($null_text,array()) . "</p>\n";
 	}
 	
@@ -76,6 +86,12 @@ function posts_loop( $atts ) {
 		if ( $style == "post" ) {
 			$ret_val .= "<h2 class='post-listing-entry-title'>";
 		}
+		if ( $show_date ) {
+			$ret_val .= "<span class='upcoming_date'>";
+			$ret_val .= get_the_date($date_format);
+			$ret_val .= "</span>";
+			$ret_val .= "<span class='upcoming_date_sep'>: </span>\n";
+		}
 		$ret_val .= "<a href='" . get_permalink() . "'>";
 		$ret_val .= the_title( '', '', false);
 		$ret_val .= "</a>";
@@ -85,18 +101,18 @@ function posts_loop( $atts ) {
 		$ret_val .= "\n";
 		if ( $text == "excerpt" ) {
 			$ret_val .= "<div>\n";
-			$ret_val .= get_the_excerpt();
-			$ret_val .= "</div>\n";			
+			$ret_val .= do_shortcode(get_the_excerpt());
+			$ret_val .= "</div>\n";
 		} elseif ( $text == "normal" ) {
 			$ret_val .= "<div>\n";
 			$more = 0; // Tell wordpress to respect the [more] tag for the next line:
 			$ret_val .= apply_filters( 'the_content', get_the_content("") );
 			$ret_val .= "</div>\n";
 		}
-		$ret_val .= "</li>";
+		$ret_val .= "</li>\n";
 	}
 	wp_reset_postdata();
-	$ret_val .= "</ul>";
+	$ret_val .= "</ul>\n";
 
 	return $ret_val;
 }
