@@ -2,7 +2,7 @@
 /*
  * Plugin Name: Simple post listing
  * Description: List a subset of your posts using the shortcode [postlist].
- * Version: 0.1
+ * Version: 0.2
  * Author: Samuel Coskey
  * Author URI: http://boolesrings.org
 */
@@ -25,6 +25,7 @@ function posts_loop( $atts ) {
 		'tag' => '',
 		'style' => 'list',
 		'text' => 'none',
+		'more_text' => ' ...',
 		'null_text' => '(none)',
 		'class_name' => '',
 		'show_date' => '',
@@ -101,12 +102,15 @@ function posts_loop( $atts ) {
 		$ret_val .= "\n";
 		if ( $text == "excerpt" ) {
 			$ret_val .= "<div>\n";
-			$ret_val .= do_shortcode(get_the_excerpt());
+			$override_excerpt = function()use($more_text){return $more_text;};
+			add_filter ( 'excerpt_more', $override_excerpt );
+			$ret_val .= apply_filters( 'the_content', wp_trim_excerpt($post->post_excerpt) );
+			remove_filter ( 'excerpt_more', $override_excerpt );
 			$ret_val .= "</div>\n";
 		} elseif ( $text == "normal" ) {
 			$ret_val .= "<div>\n";
 			$more = 0; // Tell wordpress to respect the [more] tag for the next line:
-			$ret_val .= apply_filters( 'the_content', get_the_content("") );
+			$ret_val .= apply_filters( 'the_content', get_the_content($more_text) );
 			$ret_val .= "</div>\n";
 		}
 		$ret_val .= "</li>\n";

@@ -4,8 +4,8 @@ Contributors: sgcoskey
 Donate link: http://boolesrings.org
 Tags: posts, list
 Requires at least: 3.0
-Tested up to: 3.3
-Stable tag: 0.1
+Tested up to: 3.3.2
+Stable tag: 0.2
 
 Use the [postlist] shortcode to show a list of posts.
 
@@ -34,6 +34,9 @@ the list style is plain.
 or *normal*.  If it is *excerpt*, then the post excerpt is shown, similar
 to search results.  If it is *normal* then the full post (up to
 the `[more]` tag) is shown.
+
+* **more_text**: Specify the text to append onto truncated excerpts.
+Defaults to ` ...`.
 
 * **null_text**: If no results are returned, shows this text.
 Defaults to `(none)`.
@@ -71,6 +74,9 @@ Report bugs, give feedback, or fork this plugin on
 Nothing unusual here!
 
 == Changelog ==
+
+`0.2` Added the **more_text* option, and improved the *excerpt*
+display.
 
 `0.1` Changed the **category_name** option name to just **category**.
 Please update your site accordingly!  The old option name will be
