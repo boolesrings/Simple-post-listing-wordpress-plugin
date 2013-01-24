@@ -47,6 +47,7 @@ function posts_loop( $atts ) {
 	}
 	if ( $q ) {
 		$q = str_replace ( "&#038;", "&", $q );
+		$q = str_replace ( "&amp;", "&", $q );
 	}
 
 	/*
